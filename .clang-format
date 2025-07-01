@@ -1,0 +1,18 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+ColumnLimit: 88
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Always
+RemoveBracesLLVM: false
+AccessModifierOffset: -2
+AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: NextLineOnly
+InsertBraces: true
+QualifierAlignment: Left
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterRequiresInClause: true
+  AfterRequiresInExpression: true
+RequiresClausePosition: WithPreceding
