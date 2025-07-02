@@ -11,21 +11,23 @@
 
 #include "expander.h"
 
-ABSL_FLAG(std::string, file, "", "");
+#include <absl/log/log.h>
+
 ABSL_FLAG(std::vector<std::string>, search_paths, {},
           "comma-separated list of directories, to search through for includes");
 ABSL_FLAG(bool, debug, false, "include line directives");
 
 int main(const int argc, char *argv[]) {
   absl::SetStderrThreshold(absl::LogSeverityAtLeast::kError);
+  
   absl::InitializeLog();
-
-  absl::SetProgramUsageMessage(
-      "--file=<file> --search_paths=<path, ...> --debug=false");
-  absl::ParseCommandLine(argc, argv);
-
-  fs::path file_path = absl::GetFlag(FLAGS_file);
-  QCHECK(fs::exists(file_path)) << "File must not be empty!";
+  absl::SetProgramUsageMessage("<file> --search_paths=<path, ...> --debug=false");
+  
+  const std::vector<char *> args = absl::ParseCommandLine(argc, argv);
+  QCHECK(args.size() == 2) << "File must not be empty!";
+  
+  fs::path file_path = args[1];
+  QCHECK(fs::exists(file_path)) << "File must exist!";
 
   std::vector<std::string> raw_search_paths = absl::GetFlag(FLAGS_search_paths);
   std::vector<fs::path> search_paths(raw_search_paths.begin(), raw_search_paths.end());
