@@ -19,13 +19,13 @@ class Expander {
 
   std::optional<fs::path> ResolvePath(std::string_view file_name);
 
-  static bool ShouldIgnore(std::string_view filename);
-  static bool ShouldPreserve(std::string_view filename);
-  static std::string LineDirective(std::string_view filename, std::size_t line_no);
+  static bool ShouldIgnore(std::string_view file_name);
+  static bool ShouldPreserve(std::string_view file_name);
+  static std::string LineDirective(std::string_view file_path, std::size_t line_no);
 
   bool HandleInclude(std::string_view line);
 
-  void DoExpand(fs::path path);
+  void DoExpand(fs::path file_path);
 
 public:
   std::string Expand(fs::path file_path, std::vector<fs::path> search_paths);

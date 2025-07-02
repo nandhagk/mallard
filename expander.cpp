@@ -61,13 +61,13 @@ std::optional<fs::path> Expander::ResolvePath(const std::string_view file_name) 
 }
 
 [[gnu::always_inline, nodiscard]] bool
-Expander::ShouldIgnore(const std::string_view filename) {
-  return kSystemHeaders.contains(filename);
+Expander::ShouldIgnore(const std::string_view file_name) {
+  return kSystemHeaders.contains(file_name);
 }
 
 [[gnu::always_inline, nodiscard]] bool
-Expander::ShouldPreserve(const std::string_view filename) {
-  return kExtendedHeaders.contains(filename);
+Expander::ShouldPreserve(const std::string_view file_name) {
+  return kExtendedHeaders.contains(file_name);
 }
 
 bool Expander::HandleInclude(const std::string_view line) {
@@ -98,20 +98,20 @@ bool Expander::HandleInclude(const std::string_view line) {
 }
 
 [[gnu::always_inline, nodiscard]] std::string
-Expander::LineDirective(const std::string_view path, const std::size_t line_no) {
-  return absl::StrCat("#line ", line_no, " \"", path, "\"");
+Expander::LineDirective(const std::string_view file_path, const std::size_t line_no) {
+  return absl::StrCat("#line ", line_no, " \"", file_path, "\"");
 }
 
-void Expander::DoExpand(fs::path path) {
-  if (!expanded_paths_.emplace(path).second) {
-    LOG(INFO) << "Skipping: " << path;
+void Expander::DoExpand(fs::path file_path) {
+  if (!expanded_paths_.emplace(file_path).second) {
+    LOG(INFO) << "Skipping: " << file_path;
     return;
   }
 
-  LOG(INFO) << "Expanding: " << path;
-  lines_.push_back(LineDirective(path.native(), 1));
+  LOG(INFO) << "Expanding: " << file_path;
+  lines_.push_back(LineDirective(file_path.native(), 1));
 
-  std::ifstream file(path);
+  std::ifstream file(file_path);
   std::string raw_line;
   for (std::size_t line_no = 1; std::getline(file, raw_line); ++line_no) {
     std::string_view line(raw_line);
@@ -123,7 +123,7 @@ void Expander::DoExpand(fs::path path) {
     }
 
     if (HandleInclude(line)) {
-      lines_.push_back(LineDirective(path.native(), line_no + 1));
+      lines_.push_back(LineDirective(file_path.native(), line_no + 1));
     }
   }
 }
