@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "lib/prelude.h"
-// #include "ska_sort.h"
+#include "ska_sort.h"
 
 namespace mld {
 
@@ -20,8 +20,8 @@ template <typename R>
     std::vector<std::pair<value_type, u32>> p;
     p.reserve(len);
     for (auto &&a : r) p.emplace_back(a, p.size());
-    std::ranges::sort(p);
-    // ska::ska_sort(p.begin(), p.end());
+    // std::ranges::sort(p);
+    ska::ska_sort(p.begin(), p.end());
 
     std::vector<value_type> v;
     v.reserve(len);
