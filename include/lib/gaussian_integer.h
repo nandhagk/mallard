@@ -1,8 +1,6 @@
 #ifndef MALLARD_GAUSSIAN_INTEGER_H
 #define MALLARD_GAUSSIAN_INTEGER_H
 
-#include <iostream>
-
 #include "lib/math.h"
 
 namespace mld {

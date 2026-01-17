@@ -1,7 +1,7 @@
-#include <concepts>
 #ifndef MALLARD_FUNCTIONAL_GRAPH_H
 #define MALLARD_FUNCTIONAL_GRAPH_H 1
 
+#include <concepts>
 #include <cassert>
 #include <vector>
 

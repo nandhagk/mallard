@@ -14,7 +14,7 @@
 
 namespace mld {
 template <typename T>
-constexpr std::optional<std::pair<T, std::vector<u32>>>
+[[nodiscard]] constexpr std::optional<std::pair<T, std::vector<u32>>>
 min_arborescence(u32 len, const std::vector<std::tuple<u32, u32, T>> &edg,
                  u32 root) noexcept {
     using weight_type = T;
@@ -99,7 +99,8 @@ min_arborescence(u32 len, const std::vector<std::tuple<u32, u32, T>> &edg,
 }
 
 template <internal::weighted_graph DirectedGraph>
-constexpr auto min_arborescence(const DirectedGraph &g, u32 root, u32 m = 0) noexcept {
+[[nodiscard]] constexpr auto min_arborescence(const DirectedGraph &g, u32 root,
+                                              u32 m = 0) noexcept {
     using weight_type = internal::graph_weight_t<DirectedGraph>;
 
     u32 len = static_cast<u32>(g.size());
