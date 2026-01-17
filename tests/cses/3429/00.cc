@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+#include "blazingio.min.h"
+#include "lib/lichao_tree.h"
+#include "lib/managers/reusing.h"
+#include "lib/prelude.h"
+
+void solve() {
+    u32 n;
+    std::cin >> n;
+
+    static std::array<std::byte, 1 << 29> buf;
+    std::pmr::monotonic_buffer_resource mbr{buf.data(), buf.size(),
+                                            std::pmr::null_memory_resource()};
+
+    std::pmr::polymorphic_allocator pa{&mbr};
+
+    using line = mld::internal::line<i64>;
+    mld::lichao_tree<u32, line, mld::pmr::managers::reusing<>> lch(0, 100'001, pa);
+
+    while (n--) {
+        u32 t;
+        std::cin >> t;
+
+        if (t == 1) {
+            i32 a, b;
+            std::cin >> a >> b;
+
+            lch.add(line(-a, -b));
+        } else {
+            u32 x;
+            std::cin >> x;
+
+            std::cout << -lch.query(x)(x) << '\n';
+        }
+    }
+}
+
+i32 main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    solve();
+}

@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-std=c++20, -DNANDHAGK_LOCAL, -Wall, -Wextra, -Wpedantic, -Wshadow, -I/home/nandhagk/Projects/mallard/include]

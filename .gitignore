@@ -1,0 +1,7 @@
+cmake-build*/
+.idea/
+contest/
+build/
+**/__pycache__/
+.venv/
+tests/**/out.cc

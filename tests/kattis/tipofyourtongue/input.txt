@@ -1,0 +1,9 @@
+4 4
+cat
+catcat
+octal
+occidental
+AND cat cat
+OR oc at
+AND ca at
+XOR oc al
