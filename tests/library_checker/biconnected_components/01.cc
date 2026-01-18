@@ -2,24 +2,25 @@
 
 #include "blazingio.min.h"
 #include "lib/bcc.h"
-#include "lib/dynamic_graph.h"
+#include "lib/static_csr.h"
 #include "lib/prelude.h"
 
 void solve() {
     u32 n, m;
     std::cin >> n >> m;
 
-    mld::dynamic_graph<u32> g(n);
-    g.reserve(2 * m);
+    std::vector<std::pair<u32, u32>> e;
+    e.reserve(2 * m);
 
     while (m--) {
         u32 u, v;
         std::cin >> u >> v;
 
-        g.add_edge(u, v);
-        g.add_edge(v, u);
+        e.emplace_back(u, v);
+        e.emplace_back(v, u);
     }
 
+    mld::static_csr g(n, e);
     auto [_, ccs] = mld::bcc(g);
 
     std::cout << ccs.size() << '\n';
