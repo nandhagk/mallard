@@ -29,9 +29,9 @@ struct max_cnt : base<std::pair<T, U>>,
         auto &&[a, b] = lhs.val();
         auto &&[c, d] = rhs.val();
 
-        if (a < c)
+        if (a > c)
             return lhs;
-        else if (c < a)
+        else if (c > a)
             return rhs;
         else
             return {a, b + d};
