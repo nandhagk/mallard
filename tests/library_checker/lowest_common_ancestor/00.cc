@@ -12,6 +12,7 @@ void solve() {
     for (u32 u = 1; u < n; ++u) {
         u32 p;
         std::cin >> p;
+
         lct.link(u, p);
     }
 
