@@ -2,6 +2,7 @@
 #define MALLARD_BINOMIAL_H 1
 
 #include <cassert>
+#include <concepts>
 #include <vector>
 
 #include "lib/prelude.h"
@@ -39,6 +40,23 @@ public:
     [[nodiscard]] constexpr value_type comb(size_type p, size_type q) const noexcept {
         assert(q <= p && p <= len);
         return fct[p] * inv[q] * inv[p - q];
+    }
+
+    template <std::unsigned_integral Scalar>
+    [[nodiscard]] constexpr value_type lucas(Scalar m, Scalar n) const noexcept {
+        std::vector<size_type> a, b;
+        size_type p = Z::mod();
+
+        for (; m; m /= p) a.push_back(m % p);
+        for (; n; n /= p) b.push_back(n % p);
+
+        u32 k = std::max(static_cast<u32>(a.size()), static_cast<u32>(b.size()));
+        a.resize(k, 0), b.resize(k, 0);
+
+        Z res = 1;
+        for (u32 i = 0; i < k; ++i) res *= a[i] < b[i] ? Z(0) : comb(a[i], b[i]);
+
+        return res;
     }
 };
 } // namespace mld
