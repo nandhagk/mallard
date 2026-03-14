@@ -66,13 +66,16 @@ public:
         return h.is_ancestor(u, nxt[rot[u]]);
     }
 
+    [[nodiscard]] constexpr size_type dist_to_cycle(size_type u) const noexcept {
+        if (is_in_cycle(u)) return 0;
+
+        size_type r = rot[u];
+        return h.dep[u] - h.dep[h.lca(u, nxt[r])];
+    }
+
     [[nodiscard]] constexpr size_type min_cycle(size_type u) const noexcept {
         size_type r = rot[u];
-
-        size_type ans = h.dep[nxt[r]] - h.dep[r] + 1;
-        if (!is_in_cycle(u)) ans += h.dep[u] - h.dep[h.lca(u, nxt[r])];
-
-        return ans;
+        return h.dep[nxt[r]] - h.dep[r] + 1 + dist_to_cycle(u);
     }
 
     [[nodiscard]] constexpr std::optional<size_type> dist(size_type u,
