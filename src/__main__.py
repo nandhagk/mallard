@@ -11,7 +11,7 @@ BUILD_DIR = Path.cwd() / "build"
 TEST_DIR = Path.cwd() / "tests"
 
 CXX_FLAGS = (
-    "-std=c++20",
+    "-std=c++23",
     "-O2",
     "-g",
     "-DNANDHAGK_LOCAL",
